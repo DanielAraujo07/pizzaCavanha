@@ -1,0 +1,223 @@
+        /* Estilos Globais - Dark Mode com Cores Quentes */
+        :root {
+            --primary-color: #FFA500;
+            /* Laranja */
+            --secondary-color: #FFD700;
+            /* Amarelo ouro */
+            --dark-color: #242424;
+            /* Background */
+            --light-color: #1E1E1E;
+            /* Cinza escuro */
+            --text-color: #E0E0E0;
+            /* Cinza claro */
+            --text-dark: #333;
+            --success-color: #4CAF50;
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #261a6c, #ad4727, #fd9c2d);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        
+        header {
+            display: flex;
+            justify-content: center;
+            background-color: var(--light-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            top: 0;
+            position: fixed;
+            width: 100vw;
+            height: 77px;
+            z-index: 100;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .header-container {
+            width: 100vw;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-family: Jaro;
+            margin-top: 20px ;
+            font-weight: 400;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            background-color: rgba(255, 165, 0, 0.1);
+        }
+
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            background-color: #000;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        #game-canvas {
+            background-color: #111;
+            display: block;
+        }
+
+        #score {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            z-index: 2;
+        }
+
+        .player1 {
+            color: #4fc3f7;
+        }
+
+        .player2 {
+            color: #ff5252;
+        }
+
+        #middle-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+
+        #start-screen,
+        #game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: linear-gradient(45deg, #4fc3f7, #2196f3);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 11;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .controls {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .controls p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .player1-key {
+            color: #4fc3f7;
+            font-weight: bold;
+        }
+
+        .player2-key {
+            color: #ff5252;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #winner-message {
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .winner-player1 {
+            color: #4fc3f7;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.7);
+        }
+
+        .winner-player2 {
+            color: #ff5252;
+            text-shadow: 0 0 10px rgba(255, 82, 82, 0.7);
+        }

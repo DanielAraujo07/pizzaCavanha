@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza do Cavanha - Carrinho</title>
+    <style>
+        /* Estilos Globais - Dark Mode com Cores Quentes */
+        :root {
+            --primary-color: #FFA500; /* Laranja */
+            --secondary-color: #FFD700; /* Amarelo ouro */
+            --dark-color: #121212; /* Preto quase puro */
+            --light-color: #1E1E1E; /* Cinza escuro */
+            --text-color: #E0E0E0; /* Cinza claro */
+            --text-dark: #333;
+            --success-color: #4CAF50;
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--light-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            filter: invert(75%) sepia(60%) saturate(500%) hue-rotate(360deg);
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            background-color: rgba(255, 165, 0, 0.1);
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: #e69500;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 165, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e6c700;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Páginas */
+        .page {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Página Carrinho */
+        .carrinho h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .carrinho-container {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .carrinho-vazio {
+            text-align: center;
+            padding: 40px 0;
+            color: #aaa;
+        }
+
+        .carrinho-itens {
+            margin-bottom: 30px;
+        }
+
+        .carrinho-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .carrinho-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-info img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .item-detalhes h3 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .item-acoes {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantidade-controle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantidade-controle button {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .quantidade-controle span {
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remover-item {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .item-preco {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .carrinho-total {
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .carrinho-total h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .carrinho-acoes {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* Página Cardápio (atualizada) */
+        .cardapio h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .menu-categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background-color: #333;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item-info {
+            padding: 20px;
+        }
+
+        .menu-item-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .menu-item-info p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .menu-item-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #e69500;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid var(--primary-color);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .carrinho-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .item-acoes {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/1404/1404945.png" alt="Pizza">
+                <h1>Pizza do Cavanha</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="home">Início</a></li>
+                    <li><a href="#" class="nav-link" data-page="cardapio">Cardápio</a></li>
+                    <li><a href="#" class="nav-link" data-page="carrinho">Carrinho</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Página Inicial -->
+    <section id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <h2>As melhores pizzas da cidade</h2>
+                <p>Feitas com ingredientes selecionados e o toque especial do Chef Cavanha</p>
+                <div>
+                    <a href="#" class="btn btn-primary nav-link" data-page="cardapio">Ver Cardápio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página Cardápio -->
+    <section id="cardapio" class="page">
+        <div class="container">
+            <h1 class="cardapio">Nosso Cardápio</h1>
+            
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="tradicionais">Tradicionais</button>
+                <button class="category-btn" data-category="especiais">Especiais</button>
+                <button class="category-btn" data-category="doces">Doces</button>
+                <button class="category-btn" data-category="vegetarianas">Vegetarianas</button>
+            </div>
+            
+            <div class="menu-items" id="menu-items">
+                <!-- Os itens do cardápio serão adicionados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Página Carrinho -->
+    <section id="carrinho" class="page">
+        <div class="container">
+            <h1 class="carrinho">Seu Carrinho</h1>
+            
+            <div class="carrinho-container">
+                <div class="carrinho-itens" id="carrinho-itens">
+                    <!-- Itens do carrinho serão adicionados aqui -->
+                </div>
+                
+                <div class="carrinho-total">
+                    <h3>Total: R$<span id="carrinho-total">0.00</span></h3>
+                </div>
+                
+                <div class="carrinho-acoes">
+                    <button class="btn btn-secondary" id="continuar-comprando">Continuar Comprando</button>
+                    <button class="btn btn-primary" id="finalizar-pedido">Finalizar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/1404/1404945.png" alt="Pizza" style="filter: invert(75%) sepia(60%) saturate(500%) hue-rotate(360deg);">
+                <h1 style="color: var(--primary-color);">Pizza do Cavanha</h1>
+            </div>
+            <p>© 2023 Pizza do Cavanha. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+
+    </script>
+</body>
+</html>

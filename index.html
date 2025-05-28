@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza do Cavanha</title>
+    <link rel="shortcur icon" href="assets/logo.png" />
+    <link rel="stylesheet" href="style.css">
+    <!-- Fontes Oswald, Jaro e Rajdhani -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&family=Oswald:wght@200..700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome para ícones -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Logo">
+                <h1>Pizza do Cavanha</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="home">Início</a></li>
+                    <li><a href="#" class="nav-link" data-page="monte-sua-pizza">Monte sua Pizza</a></li>
+                    <li><a href="#" class="nav-link" data-page="cardapio">Cardápio</a></li>
+                    <li><a href="#" class="nav-link" data-page="carrinho">Carrinho</a></li>
+                    <li><a href="pong.html">Esperando a Pizza?</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Página Inicial -->
+    <section id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <h2>As pizzas mais cremooooosas da região!</h2>
+                <p>Ingredientes selecionados a dedo pelo Chef Cavanha</p>
+                <div>
+                    <a href="#" class="btn btn-primary nav-link" data-page="monte-sua-pizza">Monte sua Pizza</a>
+                    <a href="#" class="btn btn-secondary nav-link" data-page="cardapio">Ver Cardápio</a>
+                </div>
+            </div>
+
+            <div class="destaques">
+                <h2>Nossos Destaques</h2>
+                <div class="pizzas-destaque">
+                    <div class="pizza-item">
+                        <img src="https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                            alt="Pizza Margherita">
+                        <h3>Margherita</h3>
+                        <p>Molho de tomate, mussarela fresca e manjericão</p>
+                    </div>
+                    <div class="pizza-item">
+                        <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Pizza Pepperoni">
+                        <h3>Pepperoni</h3>
+                        <p>Molho de tomate, mussarela e pepperoni</p>
+                    </div>
+                    <div class="pizza-item">
+                        <img src="https://images.unsplash.com/photo-1552539618-7eec9b4d1796?q=80&w=1402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Pizza Vegetariana">
+                        <h3>Vegetariana</h3>
+                        <p>Molho de tomate, queijo vegano, tomate e legumes frescos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página Monte sua Pizza -->
+    <section id="monte-sua-pizza" class="page">
+        <div class="container">
+            <h1 class="titulo-pagina">Monte sua Pizza</h1>
+
+            <div class="pizza-builder-container">
+                <div class="pizza-canvas-container">
+                    <canvas id="pizza-canvas" width="400" height="400"></canvas>
+                </div>
+
+                <div class="ingredientes-panel">
+                    <div class="tamanho-pizza">
+                        <h3>Tamanho:</h3>
+                        <div class="tamanho-options">
+                            <label>
+                                <input type="radio" name="tamanho" value="pequena" checked>
+                                Pequena
+                            </label>
+                            <label>
+                                <input type="radio" name="tamanho" value="media">
+                                Média
+                            </label>
+                            <label>
+                                <input type="radio" name="tamanho" value="grande">
+                                Grande
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="ingredientes-list">
+                        <h3>Ingredientes:</h3>
+                        <div class="ingredientes-grid" id="ingredientes-grid">
+                            <!-- Os ingredientes serão adicionados via JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="ingredientes-selecionados">
+                        <h3>Sua Pizza:</h3>
+                        <ul id="ingredientes-selecionados-list">
+                            <!-- Os ingredientes selecionados serão adicionados aqui -->
+                        </ul>
+                    </div>
+
+                    <div class="total-pedido">
+                        <h3>Total: R$<span id="total-pedido">30.00</span></h3>
+                        <button id="btn-finalizar" class="btn" disabled>Finalizar Pedido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página Cardápio -->
+    <section id="cardapio" class="page">
+        <div class="container">
+            <h1 class="titulo-pagina">Nosso Cardápio</h1>
+
+            <div class="menu-categories">
+                <button class="category-btn" data-category="todas">Todas</button>
+                <button class="category-btn active" data-category="tradicionais">Tradicionais</button>
+                <button class="category-btn" data-category="especiais">Especiais</button>
+                <button class="category-btn" data-category="doces">Doces</button>
+                <button class="category-btn" data-category="vegetarianas">Vegetarianas</button>
+            </div>
+
+            <div class="menu-items" id="menu-items">
+                <!-- Os itens do cardápio serão adicionados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Página Carrinho -->
+    <section id="carrinho" class="page">
+        <div class="container">
+            <h1 class="titulo-pagina">Seu Carrinho</h1>
+
+            <div class="carrinho-container">
+                <div class="carrinho-itens" id="carrinho-itens">
+                    <!-- Itens do carrinho serão adicionados aqui -->
+                </div>
+
+                <div class="carrinho-total">
+                    <h3>Total: R$<span id="carrinho-total">0.00</span></h3>
+                </div>
+
+                <div class="carrinho-acoes">
+                    <a href="#" class="nav-link" data-page="home"><button class="btn btn-secondary"
+                            id="continuar-comprando">Continuar Comprando</button></a>
+                    <button class="btn btn-primary" id="finalizar-pedido">Finalizar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="logo">
+                <img src="assets/logo-2.png" alt="Logo">
+                <h1 style="color: var(--primary-color);">Pizza do Cavanha</h1>
+            </div>
+            <p>© 2025 Pizza do Cavanha. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        // Navegação entre páginas
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mostrar página inicial por padrão
+            showPage('home');
+
+            // Configurar navegação
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+
+            // Inicializar página "Monte sua Pizza"
+            initPizzaBuilder();
+
+            // Inicializar página "Cardápio"
+            initCardapio();
+        });
+
+        function showPage(pageId) {
+            // Esconder todas as páginas
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Mostrar a página selecionada
+            document.getElementById(pageId).classList.add('active');
+
+            // Rolagem suave para o topo
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Página "Monte sua Pizza" - ATUALIZADA
+        function initPizzaBuilder() {
+            const ingredientes = [
+                { id: 1, nome: 'Queijo', imagem: './assets/queijo.png', preco: 2 },
+                { id: 2, nome: 'Pepperoni', imagem: './assets/pepperoni.png', preco: 3 },
+                { id: 3, nome: 'Cogumelos', imagem: './assets/cogumelo.png', preco: 2.5 },
+                { id: 4, nome: 'Cebola', imagem: './assets/cebola.png', preco: 1.5 },
+                { id: 5, nome: 'Pimentão', imagem: './assets/pimentao.png', preco: 2 },
+                { id: 6, nome: 'Azeitonas', imagem: './assets/azeitona.png', preco: 2.5 },
+                { id: 7, nome: 'Bacon', imagem: './assets/bacon.png', preco: 3.5 },
+                { id: 8, nome: 'Tomate', imagem: './assets/tomate.png', preco: 2 },
+                { id: 9, nome: 'Manjericão', imagem: './assets/manjericao.png', preco: 1.5 },
+                { id: 10, nome: 'Alho', imagem: './assets/alho.png', preco: 1 }
+            ];
+
+            const ingredientesGrid = document.getElementById('ingredientes-grid');
+            ingredientes.forEach(ing => {
+                const btn = document.createElement('button');
+                btn.className = 'ingrediente-btn';
+                btn.innerHTML = `
+                    <img src="${ing.imagem}" alt="${ing.nome}">
+                    <span>${ing.nome}</span>
+                `;
+                btn.addEventListener('click', () => adicionarIngrediente(ing));
+                ingredientesGrid.appendChild(btn);
+            });
+
+            // Canvas da pizza
+            const canvas = document.getElementById('pizza-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Imagem da pizza base
+            const pizzaBaseImg = new Image();
+            pizzaBaseImg.src = './assets/pizzaBase.png';
+
+            // Array para armazenar os ingredientes desenhados
+            let ingredientesDesenhados = [];
+
+            pizzaBaseImg.onload = function () {
+                redesenharPizza();
+            };
+
+            function redesenharPizza() {
+                // Limpa o canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Desenha a pizza base (centralizada)
+                const baseLargura = pizzaBaseImg.width * 0.8;
+                const baseAltura = pizzaBaseImg.height * 0.8;
+                const xBase = (canvas.width - baseLargura) / 2;
+                const yBase = (canvas.height - baseAltura) / 2;
+
+                ctx.drawImage(pizzaBaseImg, xBase, yBase, baseLargura, baseAltura);
+
+                // Redesenha os ingredientes
+                ingredientesDesenhados.forEach(ing => {
+                    const img = new Image();
+                    img.src = ing.imagem;
+                    img.onload = function () {
+                        ctx.drawImage(img, ing.x, ing.y, ing.tamanho, ing.tamanho);
+                    };
+                });
+            }
+
+            const ingredientesSelecionados = [];
+            const ingredientesList = document.getElementById('ingredientes-selecionados-list');
+            const totalPedido = document.getElementById('total-pedido');
+            const btnFinalizar = document.getElementById('btn-finalizar');
+
+            function adicionarIngrediente(ingrediente) {
+                const jaExiste = ingredientesSelecionados.some(ing => ing.id === ingrediente.id);
+
+                if (!jaExiste) {
+                    ingredientesSelecionados.push(ingrediente);
+
+                    // Adiciona o ingrediente ao array de desenho
+                    const angulo = 0 * Math.PI * 2;
+                    const distancia = 0 * 120;
+                    const tamanhoIngrediente = 410;
+                    const x = canvas.width / 2 - tamanhoIngrediente / 2;
+                    const y = canvas.height / 2 - tamanhoIngrediente / 2;
+
+                    ingredientesDesenhados.push({
+                        ...ingrediente,
+                        x: x,
+                        y: y,
+                        tamanho: tamanhoIngrediente
+                    });
+
+                    atualizarListaIngredientes();
+                    redesenharPizza();
+                    calcularTotal();
+                }
+            }
+
+            function removerIngrediente(index) {
+                ingredientesSelecionados.splice(index, 1);
+                ingredientesDesenhados.splice(index, 1);
+                atualizarListaIngredientes();
+                redesenharPizza();
+                calcularTotal();
+            }
+
+            function atualizarListaIngredientes() {
+                ingredientesList.innerHTML = '';
+
+                if (ingredientesSelecionados.length === 0) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Nenhum ingrediente selecionado ainda';
+                    li.style.color = '#aaa';
+                    ingredientesList.appendChild(li);
+                    btnFinalizar.disabled = true;
+                    return;
+                }
+
+                ingredientesSelecionados.forEach((ing, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        ${ing.nome} - R$${ing.preco.toFixed(2)}
+                        <button onclick="removerIngrediente(${index})">×</button>
+                    `;
+                    ingredientesList.appendChild(li);
+                });
+
+                btnFinalizar.disabled = false;
+            }
+
+            function calcularTotal() {
+                const tamanho = document.querySelector('input[name="tamanho"]:checked').value;
+                const precoBase = { pequena: 20, media: 30, grande: 40 }[tamanho];
+                const precoIngredientes = ingredientesSelecionados.reduce((total, ing) => total + ing.preco, 0);
+                const total = precoBase + precoIngredientes;
+
+                totalPedido.textContent = total.toFixed(2);
+            }
+
+            document.querySelectorAll('input[name="tamanho"]').forEach(radio => {
+                radio.addEventListener('change', function () {
+                    canvas.width = size;
+                    canvas.height = size;
+                    redesenharPizza();
+                    calcularTotal();
+                });
+            });
+
+            btnFinalizar.addEventListener('click', function () {
+                alert(`Pedido finalizado! Total: R$${totalPedido.textContent}\nObrigado por escolher a Pizza do Cavanha!`);
+            });
+
+            window.removerIngrediente = removerIngrediente;
+        }
+
+        // [Manter a função initCardapio() anterior]
+        function initCardapio() {
+            const cardapio = {
+                tradicionais: [
+                    { nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1571066811602-716837d681de?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1601924582970-9238bcb495d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
+                ],
+                especiais: [
+                    { nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
+                ],
+                doces: [
+                    { nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1593246049226-ded77bf90326?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
+                ],
+                vegetarianas: [
+                    { nome: 'Vegetariana', descricao: 'Molho de tomate, mussarela e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1593504049359-74330189a345?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { nome: 'Rúcula com Tomate Seco', descricao: 'Mussarela de búfala, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
+                ]
+            };
+
+            const menuItems = document.getElementById('menu-items');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+
+            mostrarCategoria('tradicionais');
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const category = this.getAttribute('data-category');
+                    mostrarCategoria(category);
+                });
+            });
+
+            function mostrarCategoria(category) {
+                menuItems.innerHTML = '';
+
+                cardapio[category].forEach(item => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item';
+                    menuItem.innerHTML = `
+                        <img src="${item.imagem}" alt="${item.nome}">
+                        <div class="menu-item-info">
+                            <h3>${item.nome}</h3>
+                            <p>${item.descricao}</p>
+                            <div class="menu-item-price">
+                                <span class="price">R$${item.preco.toFixed(2)}</span>
+                                <button class="add-to-cart">Adicionar</button>
+                            </div>
+                        </div>
+                    `;
+                    menuItems.appendChild(menuItem);
+                });
+            }
+            document.querySelector('.add-to-cart').addEventListener('click', () => {
+                const container = document.getElementById('imagem-container');
+
+                // Cria a imagem
+                const img = document.createElement('img');
+                img.src = './assets/carrinho.png'; // substitua pelo caminho real da imagem
+                img.alt = 'Item adicionado ao carrinho';
+                img.style.width = '100px'; // ou qualquer tamanho que você desejar
+
+                // Adiciona ao container
+                container.appendChild(img);
+
+                // Opcional: remove a imagem depois de um tempo (ex: efeito temporário)
+                setTimeout(() => {
+                    img.remove();
+                }, 2000);
+            });
+        }
+
+        // Página "Cardápio"
+        function initCardapio() {
+            const cardapio = {
+                todas: [
+                    { nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1566843972705-1aad0ee32f88?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1381&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://www.ogastronomo.com.br/upload/389528334-curiosidades-sobre-a-pizza-portuguesa.jpg' },
+                    { nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1650173600578-778a606f7c2c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://s2-receitas.glbimg.com/gwhIG-mUpHKhYSg8Zl21Zj_OXjA=/0x0:1280x800/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2022/M/q/GHOy3ZT9GjPxMJH7FYmw/pizza-doce-banana-receita.jpg' },
+                    { nome: 'Vegetariana', descricao: 'Molho de tomate, queijo vegano e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1552539618-7eec9b4d1796?q=80&w=1402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Rúcula com Tomate Seco', descricao: 'Queijo vegano, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1641840360785-c720744aa905?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                ],
+                tradicionais: [
+                    { nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1566843972705-1aad0ee32f88?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                ],
+                especiais: [
+                    { nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1381&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://www.ogastronomo.com.br/upload/389528334-curiosidades-sobre-a-pizza-portuguesa.jpg' }
+                ],
+                doces: [
+                    { nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1650173600578-778a606f7c2c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://s2-receitas.glbimg.com/gwhIG-mUpHKhYSg8Zl21Zj_OXjA=/0x0:1280x800/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2022/M/q/GHOy3ZT9GjPxMJH7FYmw/pizza-doce-banana-receita.jpg' }
+                ],
+                vegetarianas: [
+                    { nome: 'Vegetariana', descricao: 'Molho de tomate, queijo vegano e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1552539618-7eec9b4d1796?q=80&w=1402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { nome: 'Rúcula com Tomate Seco', descricao: 'Queijo vegano, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1641840360785-c720744aa905?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                ]
+            };
+
+            const menuItems = document.getElementById('menu-items');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+
+            // Mostrar categoria inicial
+            mostrarCategoria('tradicionais');
+
+            // Configurar botões de categoria
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // Remover classe active de todos os botões
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+
+                    // Adicionar classe active ao botão clicado
+                    this.classList.add('active');
+
+                    // Mostrar a categoria selecionada
+                    const category = this.getAttribute('data-category');
+                    mostrarCategoria(category);
+                });
+            });
+
+            function mostrarCategoria(category) {
+                menuItems.innerHTML = '';
+
+                cardapio[category].forEach(item => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item';
+                    menuItem.innerHTML = `
+                <img src="${item.imagem}" alt="${item.nome}">
+                <div class="menu-item-info">
+                    <h3>${item.nome}</h3>
+                    <p>${item.descricao}</p>
+                    <div class="menu-item-price">
+                        <span class="price">R$${item.preco.toFixed(2)}</span>
+                        <button class="add-to-cart">Adicionar</button>
+                    </div>
+                </div>
+            `;
+
+                    menuItems.appendChild(menuItem);
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

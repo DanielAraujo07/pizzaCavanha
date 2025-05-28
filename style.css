@@ -1,0 +1,548 @@
+        /* Estilos Globais - Dark Mode com Cores Quentes */
+        :root {
+            --primary-color: #FFA500; /* Laranja */
+            --secondary-color: #FFD700; /* Amarelo ouro */
+            --dark-color: #242424; /* Background */
+            --light-color: #1E1E1E; /* Cinza escuro */
+            --text-color: #E0E0E0; /* Cinza claro */
+            --text-dark: #333;
+            --success-color: #4CAF50;
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--light-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-family: Jaro;
+            font-weight: 400;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            background-color: rgba(255, 165, 0, 0.1);
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: #e69500;
+            transform: translateY(-2px);
+            box-shadow: 0 0px 8px 4px rgba(255, 165, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e6c700;
+            transform: translateY(-2px);
+            box-shadow: 0 0px 8px 4px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Páginas */
+        .page {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Página Inicial */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border: 1px solid var(--primary-color);
+            box-shadow: 0px 0px 27px 2px #FFA60070;
+        }
+
+        .hero h2 {
+            font-family: Rajdhani;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(255, 165, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .destaques {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .destaques h2 {
+            font-size: 2rem;
+            font-family: Oswald;
+            font-weight: 400;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .pizzas-destaque {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pizza-item {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            border: 1px solid var(--border-color);
+        }
+
+        .pizza-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 165, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .pizza-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .pizza-item h3 {
+            padding: 15px;
+            color: var(--primary-color);
+        }
+
+        .pizza-item p {
+            padding: 0 15px 15px;
+            color: #aaa;
+        }
+
+        /* Página Monte sua Pizza */
+        .titulo-pagina{
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: Oswald;
+            font-weight: 400;
+            font-size: 32px;
+            color: var(--primary-color)
+        }
+
+        .pizza-builder-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pizza-canvas-container {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        #pizza-canvas {
+            background-color: #2a2a2a;
+            border-radius: 50%;
+            max-width: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .ingredientes-panel {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .tamanho-pizza h3, .ingredientes-list h3, .ingredientes-selecionados h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .tamanho-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .tamanho-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .ingredientes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .ingrediente-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 165, 0, 0.1);
+        }
+
+        .ingrediente-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            background-color: rgba(255, 165, 0, 0.2);
+        }
+
+        .ingrediente-btn img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+
+        .ingrediente-btn span {
+            color: var(--text-color);
+        }
+
+        .ingredientes-selecionados ul {
+            list-style: none;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .ingredientes-selecionados li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .ingredientes-selecionados li:last-child {
+            border-bottom: none;
+        }
+
+        .ingredientes-selecionados li button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .total-pedido {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 2px solid var(--primary-color);
+            text-align: right;
+        }
+
+        .total-pedido h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        #btn-finalizar {
+            background-color: var(--success-color);
+            color: white;
+            padding: 12px 25px;
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+
+        #btn-finalizar:hover {
+            background-color: #3d8b40;
+        }
+
+        #btn-finalizar:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Página Cardápio */
+
+        .menu-categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background-color: #333;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item-info {
+            padding: 20px;
+        }
+
+        .menu-item-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .menu-item-info p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .menu-item-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #e69500;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid var(--primary-color);
+        }
+        
+        footer .logo {
+            align-self: center;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e69500;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .pizza-builder-container {
+                flex-direction: column;
+            }
+
+            #pizza-canvas {
+                width: 100%;
+                height: auto;
+            }
+        }
