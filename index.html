@@ -170,6 +170,15 @@
                 </div>
             </div>
         </div>
+        <div class="confirmacao-overlay" id="confirmacao-overlay">
+            <div class="confirmacao-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/148/148767.png" alt="Pedido Confirmado"
+                    class="fade-in">
+                <h2 class="fade-in">Pedido Confirmado!</h2>
+                <p id="confirmacao-texto" class="fade-in"></p>
+                <button id="confirmacao-btn" class="fade-in">Voltar ao Início</button>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -198,11 +207,51 @@
                 });
             });
 
+            // Inicializar página "Cardápio"
+            initCardapio();
+            // Inicializar página "Carrinho"
+            initCarrinho();
             // Inicializar página "Monte sua Pizza"
             initPizzaBuilder();
 
-            // Inicializar página "Cardápio"
-            initCardapio();
+        });
+        // Botão continuar comprando
+        document.getElementById('continuar-comprando').addEventListener('click', function () {
+            showPage('cardapio');
+        });
+
+        // Botão finalizar pedido
+        document.getElementById('finalizar-pedido').addEventListener('click', function () {
+            if (carrinho.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+
+            const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+
+            // Mostrar animação de confirmação
+            const overlay = document.getElementById('confirmacao-overlay');
+            const textoConfirmacao = document.getElementById('confirmacao-texto');
+
+            // Texto personalizado com os detalhes do pedido
+            textoConfirmacao.textContent = `Seu pedido no valor de R$${total.toFixed(2)} foi recebido com sucesso! Em breve estará pronto para entrega.`;
+
+            // Mostrar o overlay
+            overlay.classList.add('ativo');
+
+            // Configurar o botão de confirmação
+            document.getElementById('confirmacao-btn').addEventListener('click', function () {
+                // Limpar carrinho após finalizar
+                carrinho = [];
+                atualizarCarrinho();
+                localStorage.removeItem('carrinho');
+
+                // Esconder o overlay
+                overlay.classList.remove('ativo');
+
+                // Voltar para a página inicial
+                showPage('home');
+            });
         });
 
         function showPage(pageId) {
@@ -221,18 +270,235 @@
             });
         }
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
+        // Página "Cardápio"
+        function initCardapio() {
+            const cardapio = {
+                todas: [
+                    { id: 1, nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { id: 2, nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 3, nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1566843972705-1aad0ee32f88?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 4, nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1381&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 5, nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://www.ogastronomo.com.br/upload/389528334-curiosidades-sobre-a-pizza-portuguesa.jpg' },
+                    { id: 6, nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1650173600578-778a606f7c2c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 7, nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://s2-receitas.glbimg.com/gwhIG-mUpHKhYSg8Zl21Zj_OXjA=/0x0:1280x800/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2022/M/q/GHOy3ZT9GjPxMJH7FYmw/pizza-doce-banana-receita.jpg' },
+                    { id: 8, nome: 'Vegetariana', descricao: 'Molho de tomate, mussarela e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1552539618-7eec9b4d1796?q=80&w=1402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 9, nome: 'Rúcula com Tomate Seco', descricao: 'Mussarela de búfala, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1641840360785-c720744aa905?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                ],
+                tradicionais: [
+                    { id: 1, nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
+                    { id: 2, nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 3, nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1566843972705-1aad0ee32f88?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                ],
+                especiais: [
+                    { id: 4, nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1381&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 5, nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://www.ogastronomo.com.br/upload/389528334-curiosidades-sobre-a-pizza-portuguesa.jpg' }
+                ],
+                doces: [
+                    { id: 6, nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1650173600578-778a606f7c2c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 7, nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://s2-receitas.glbimg.com/gwhIG-mUpHKhYSg8Zl21Zj_OXjA=/0x0:1280x800/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2022/M/q/GHOy3ZT9GjPxMJH7FYmw/pizza-doce-banana-receita.jpg' },
+                ],
+                vegetarianas: [
+                    { id: 8, nome: 'Vegetariana', descricao: 'Molho de tomate, mussarela e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1552539618-7eec9b4d1796?q=80&w=1402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+                    { id: 9, nome: 'Rúcula com Tomate Seco', descricao: 'Mussarela de búfala, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1641840360785-c720744aa905?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
+                ]
+            };
+
+            const menuItems = document.getElementById('menu-items');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+
+            // Mostrar categoria inicial
+            mostrarCategoria('todas');
+
+            // Configurar botões de categoria
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // Remover classe active de todos os botões
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+
+                    // Adicionar classe active ao botão clicado
+                    this.classList.add('active');
+
+                    // Mostrar a categoria selecionada
+                    const category = this.getAttribute('data-category');
+                    mostrarCategoria(category);
+                });
             });
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+
+            function mostrarCategoria(category) {
+                menuItems.innerHTML = '';
+
+                cardapio[category].forEach(item => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item';
+                    menuItem.innerHTML = `
+                        <img src="${item.imagem}" alt="${item.nome}">
+                        <div class="menu-item-info">
+                            <h3>${item.nome}</h3>
+                            <p>${item.descricao}</p>
+                            <div class="menu-item-price">
+                                <span class="price">R$${item.preco.toFixed(2)}</span>
+                                <button class="add-to-cart" data-id="${item.id}">Adicionar</button>
+                            </div>
+                        </div>
+                    `;
+
+                    // Adicionar evento ao botão "Adicionar"
+                    const addButton = menuItem.querySelector('.add-to-cart');
+                    addButton.addEventListener('click', () => {
+                        adicionarAoCarrinho(item);
+                    });
+
+                    menuItems.appendChild(menuItem);
+                });
+            }
         }
 
-        // Página "Monte sua Pizza" - ATUALIZADA
+        // Carrinho
+        let carrinho = [];
+
+        function initCarrinho() {
+            // Carrega o carrinho do localStorage, se existir
+            const carrinhoSalvo = localStorage.getItem('carrinho');
+            if (carrinhoSalvo) {
+                carrinho = JSON.parse(carrinhoSalvo);
+                atualizarCarrinho();
+            }
+        }
+
+        function adicionarAoCarrinho(item) {
+            // Verifica se o item já está no carrinho
+            const itemExistente = carrinho.find(i => i.id === item.id);
+
+            if (itemExistente) {
+                // Se já existe, aumenta a quantidade
+                itemExistente.quantidade += 1;
+            } else {
+                // Se não existe, adiciona ao carrinho
+                carrinho.push({
+                    id: item.id,
+                    nome: item.nome,
+                    preco: item.preco,
+                    imagem: item.imagem,
+                    quantidade: 1
+                });
+            }
+
+            // Atualiza a exibição do carrinho
+            atualizarCarrinho();
+
+            // Salva no localStorage
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+            // Feedback visual
+            alert(`${item.nome} adicionado ao carrinho!`);
+        }
+
+        function atualizarCarrinho() {
+            const carrinhoItens = document.getElementById('carrinho-itens');
+            const carrinhoTotal = document.getElementById('carrinho-total');
+
+            if (carrinho.length === 0) {
+                carrinhoItens.innerHTML = '<div class="carrinho-vazio">Seu carrinho está vazio</div>';
+                carrinhoTotal.textContent = '0.00';
+                return;
+            }
+
+            // Limpa os itens atuais
+            carrinhoItens.innerHTML = '';
+
+            // Adiciona cada item do carrinho
+            carrinho.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'carrinho-item';
+                itemElement.innerHTML = `
+                    <div class="item-info">
+                        <img src="${item.imagem}" alt="${item.nome}">
+                        <div class="item-detalhes">
+                            <h3>${item.nome}</h3>
+                            <p>R$ ${item.preco.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div class="item-acoes">
+                        <div class="quantidade-controle">
+                            <button class="diminuir" data-index="${index}">-</button>
+                            <span>${item.quantidade}</span>
+                            <button class="aumentar" data-index="${index}">+</button>
+                        </div>
+                        <button class="remover-item" data-index="${index}">×</button>
+                    </div>
+                    <div class="item-preco">
+                        R$ ${(item.preco * item.quantidade).toFixed(2)}
+                    </div>
+                `;
+
+                carrinhoItens.appendChild(itemElement);
+            });
+
+            // Calcula o total
+            const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+            carrinhoTotal.textContent = total.toFixed(2);
+
+            // Adiciona eventos aos botões de quantidade
+            document.querySelectorAll('.diminuir').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    alterarQuantidade(index, -1);
+                });
+            });
+
+            document.querySelectorAll('.aumentar').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    alterarQuantidade(index, 1);
+                });
+            });
+
+            // Adiciona eventos aos botões de remover
+            document.querySelectorAll('.remover-item').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    removerItem(index);
+                });
+            });
+
+            // Atualiza o contador no menu
+            atualizarContadorCarrinho();
+        }
+
+        function alterarQuantidade(index, mudanca) {
+            const novoValor = carrinho[index].quantidade + mudanca;
+
+            if (novoValor < 1) {
+                // Remove o item se a quantidade for menor que 1
+                carrinho.splice(index, 1);
+            } else {
+                // Atualiza a quantidade
+                carrinho[index].quantidade = novoValor;
+            }
+
+            // Atualiza o carrinho
+            atualizarCarrinho();
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        }
+
+        function removerItem(index) {
+            carrinho.splice(index, 1);
+            atualizarCarrinho();
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        }
+
+        function atualizarContadorCarrinho() {
+            const totalItens = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+            const carrinhoLink = document.querySelector('[data-page="carrinho"]');
+
+            if (totalItens > 0) {
+                carrinhoLink.innerHTML = `Carrinho (${totalItens})`;
+            } else {
+                carrinhoLink.innerHTML = 'Carrinho';
+            }
+        }
+
+        // Página "Monte sua Pizza"
         function initPizzaBuilder() {
             const ingredientes = [
                 { id: 1, nome: 'Queijo', imagem: './assets/queijo.png', preco: 2 },
@@ -384,157 +650,6 @@
             window.removerIngrediente = removerIngrediente;
         }
 
-        // [Manter a função initCardapio() anterior]
-        function initCardapio() {
-            const cardapio = {
-                tradicionais: [
-                    { nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1571066811602-716837d681de?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
-                    { nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
-                    { nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1601924582970-9238bcb495d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
-                ],
-                especiais: [
-                    { nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
-                    { nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
-                ],
-                doces: [
-                    { nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1593246049226-ded77bf90326?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
-                    { nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
-                ],
-                vegetarianas: [
-                    { nome: 'Vegetariana', descricao: 'Molho de tomate, mussarela e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1593504049359-74330189a345?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
-                    { nome: 'Rúcula com Tomate Seco', descricao: 'Mussarela de búfala, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' }
-                ]
-            };
-
-            const menuItems = document.getElementById('menu-items');
-            const categoryBtns = document.querySelectorAll('.category-btn');
-
-            mostrarCategoria('tradicionais');
-
-            categoryBtns.forEach(btn => {
-                btn.addEventListener('click', function () {
-                    categoryBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const category = this.getAttribute('data-category');
-                    mostrarCategoria(category);
-                });
-            });
-
-            function mostrarCategoria(category) {
-                menuItems.innerHTML = '';
-
-                cardapio[category].forEach(item => {
-                    const menuItem = document.createElement('div');
-                    menuItem.className = 'menu-item';
-                    menuItem.innerHTML = `
-                        <img src="${item.imagem}" alt="${item.nome}">
-                        <div class="menu-item-info">
-                            <h3>${item.nome}</h3>
-                            <p>${item.descricao}</p>
-                            <div class="menu-item-price">
-                                <span class="price">R$${item.preco.toFixed(2)}</span>
-                                <button class="add-to-cart">Adicionar</button>
-                            </div>
-                        </div>
-                    `;
-                    menuItems.appendChild(menuItem);
-                });
-            }
-            document.querySelector('.add-to-cart').addEventListener('click', () => {
-                const container = document.getElementById('imagem-container');
-
-                // Cria a imagem
-                const img = document.createElement('img');
-                img.src = './assets/carrinho.png'; // substitua pelo caminho real da imagem
-                img.alt = 'Item adicionado ao carrinho';
-                img.style.width = '100px'; // ou qualquer tamanho que você desejar
-
-                // Adiciona ao container
-                container.appendChild(img);
-
-                // Opcional: remove a imagem depois de um tempo (ex: efeito temporário)
-                setTimeout(() => {
-                    img.remove();
-                }, 2000);
-            });
-        }
-
-        // Página "Cardápio"
-        function initCardapio() {
-            const cardapio = {
-                todas: [
-                    { nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
-                    { nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1566843972705-1aad0ee32f88?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1381&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://www.ogastronomo.com.br/upload/389528334-curiosidades-sobre-a-pizza-portuguesa.jpg' },
-                    { nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1650173600578-778a606f7c2c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://s2-receitas.glbimg.com/gwhIG-mUpHKhYSg8Zl21Zj_OXjA=/0x0:1280x800/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2022/M/q/GHOy3ZT9GjPxMJH7FYmw/pizza-doce-banana-receita.jpg' },
-                    { nome: 'Vegetariana', descricao: 'Molho de tomate, queijo vegano e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1552539618-7eec9b4d1796?q=80&w=1402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Rúcula com Tomate Seco', descricao: 'Queijo vegano, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1641840360785-c720744aa905?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
-                ],
-                tradicionais: [
-                    { nome: 'Margherita', descricao: 'Molho de tomate, mussarela fresca e manjericão', preco: 35, imagem: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80' },
-                    { nome: 'Pepperoni', descricao: 'Molho de tomate, mussarela e pepperoni', preco: 40, imagem: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Calabresa', descricao: 'Molho de tomate, mussarela e calabresa', preco: 38, imagem: 'https://images.unsplash.com/photo-1566843972705-1aad0ee32f88?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
-                ],
-                especiais: [
-                    { nome: 'Frango com Catupiry', descricao: 'Molho de tomate, frango desfiado e catupiry', preco: 45, imagem: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1381&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Portuguesa', descricao: 'Molho de tomate, presunto, ovos, cebola, azeitonas e mussarela', preco: 42, imagem: 'https://www.ogastronomo.com.br/upload/389528334-curiosidades-sobre-a-pizza-portuguesa.jpg' }
-                ],
-                doces: [
-                    { nome: 'Chocolate com Morango', descricao: 'Chocolate ao leite e morangos frescos', preco: 48, imagem: 'https://images.unsplash.com/photo-1650173600578-778a606f7c2c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Banana com Canela', descricao: 'Banana, canela e leite condensado', preco: 40, imagem: 'https://s2-receitas.glbimg.com/gwhIG-mUpHKhYSg8Zl21Zj_OXjA=/0x0:1280x800/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2022/M/q/GHOy3ZT9GjPxMJH7FYmw/pizza-doce-banana-receita.jpg' }
-                ],
-                vegetarianas: [
-                    { nome: 'Vegetariana', descricao: 'Molho de tomate, queijo vegano e legumes frescos', preco: 38, imagem: 'https://images.unsplash.com/photo-1552539618-7eec9b4d1796?q=80&w=1402&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-                    { nome: 'Rúcula com Tomate Seco', descricao: 'Queijo vegano, rúcula e tomate seco', preco: 45, imagem: 'https://images.unsplash.com/photo-1641840360785-c720744aa905?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }
-                ]
-            };
-
-            const menuItems = document.getElementById('menu-items');
-            const categoryBtns = document.querySelectorAll('.category-btn');
-
-            // Mostrar categoria inicial
-            mostrarCategoria('tradicionais');
-
-            // Configurar botões de categoria
-            categoryBtns.forEach(btn => {
-                btn.addEventListener('click', function () {
-                    // Remover classe active de todos os botões
-                    categoryBtns.forEach(b => b.classList.remove('active'));
-
-                    // Adicionar classe active ao botão clicado
-                    this.classList.add('active');
-
-                    // Mostrar a categoria selecionada
-                    const category = this.getAttribute('data-category');
-                    mostrarCategoria(category);
-                });
-            });
-
-            function mostrarCategoria(category) {
-                menuItems.innerHTML = '';
-
-                cardapio[category].forEach(item => {
-                    const menuItem = document.createElement('div');
-                    menuItem.className = 'menu-item';
-                    menuItem.innerHTML = `
-                <img src="${item.imagem}" alt="${item.nome}">
-                <div class="menu-item-info">
-                    <h3>${item.nome}</h3>
-                    <p>${item.descricao}</p>
-                    <div class="menu-item-price">
-                        <span class="price">R$${item.preco.toFixed(2)}</span>
-                        <button class="add-to-cart">Adicionar</button>
-                    </div>
-                </div>
-            `;
-
-                    menuItems.appendChild(menuItem);
-                });
-            }
-        }
     </script>
 </body>
 
