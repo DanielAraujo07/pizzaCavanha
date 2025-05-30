@@ -542,14 +542,16 @@
         }
 
         .item-info {
+            width: 250px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
         .item-info img {
-            width: 80px;
-            height: 80px;
+            border: var(--primary-color) solid 2px;
+            width: 90px;
+            height: 90px;
             object-fit: cover;
             border-radius: 5px;
         }
@@ -580,6 +582,8 @@
             border-radius: 50%;
             cursor: pointer;
             font-weight: bold;
+            font-size: 15px;
+            font-family: Oswald;
         }
 
         .quantidade-controle span {
