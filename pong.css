@@ -56,6 +56,10 @@
             padding: 15px 0;
         }
 
+        header a {
+            text-decoration: none;
+        }
+
         .logo {
             display: flex;
             align-items: center;
