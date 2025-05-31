@@ -51,6 +51,10 @@
             padding: 15px 0;
         }
 
+        header a {
+            text-decoration: none;
+        }
+
         .logo {
             display: flex;
             align-items: center;
@@ -491,18 +495,60 @@
         .footer-container {
             display: flex;
             justify-content: space-between;
-            flex-direction: column;
+            flex-direction: row;
             gap: 10px;
+            height: 100px;
+            width: 100%;
         }
 
-        .social-links a {
+        .copyright-logo-container {
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: column;
+            align-self: center;
+            height: 100px;
+        }
+
+        .social-links-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 380px;
+        }
+
+        .social-links{
+            display: flex;
+            gap: 15px;
+            width: 365px;
+            padding: 4px;
             color: var(--text-color);
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
+            font-weight: 300;
+            font-size: 1.3rem;
+            text-decoration: none;
+            text-align: center;
+            align-self: self-start;
+            transition: transform 0.5s ease;
         }
 
-        .social-links a:hover {
+        .social-links p{
+            font-family: Oswald;
+            font-weight: 300;
+        }
+
+        .social-links-icon{
+            height: 38px;
+            border-radius: 8px;
+            padding: 3px;
+            border: #fff 2px solid;
+        }
+
+        .social-links:hover{
+            transform: translateX(5px);
+        }
+
+        .social-links:hover p {
             color: var(--primary-color);
+            text-shadow: 0 0px 8px var(--primary-color);
         }
 
         /* Página Carrinho */
