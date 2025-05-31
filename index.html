@@ -24,10 +24,12 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <div class="logo">
-                <img src="assets/logo.png" alt="Logo">
-                <h1>Pizza do Cavanha</h1>
-            </div>
+            <a href="index.html">
+                <div class="logo">
+                        <img src="assets/logo.png" alt="Logo">
+                        <h1>Pizza do Cavanha</h1>
+                </div>
+            </a>
             <nav>
                 <ul>
                     <li><a href="#" class="nav-link" data-page="home">Início</a></li>
@@ -128,6 +130,14 @@
                 </div>
             </div>
         </div>
+        <div class="confirmacao-overlay" id="confirmacao-overlay">
+            <div class="confirmacao-container">
+                <img src="assets/seloCavanha_Recomendado.png" alt="Pedido Confirmado" class="fade-in">
+                <h2 class="fade-in">Pedido Confirmado!</h2>
+                <p id="confirmacao-texto" class="fade-in"></p>
+                <button id="confirmacao-btn" class="fade-in">Voltar ao Início</button>
+            </div>
+        </div>
     </section>
 
     <!-- Página Cardápio -->
@@ -136,8 +146,8 @@
             <h1 class="titulo-pagina">Nosso Cardápio</h1>
 
             <div class="menu-categories">
-                <button class="category-btn" data-category="todas">Todas</button>
-                <button class="category-btn active" data-category="tradicionais">Tradicionais</button>
+                <button class="category-btn active" data-category="todas">Todas</button>
+                <button class="category-btn" data-category="tradicionais">Tradicionais</button>
                 <button class="category-btn" data-category="especiais">Especiais</button>
                 <button class="category-btn" data-category="doces">Doces</button>
                 <button class="category-btn" data-category="vegetarianas">Vegetarianas</button>
@@ -170,13 +180,12 @@
                 </div>
             </div>
         </div>
-        <div class="confirmacao-overlay" id="confirmacao-overlay">
+        <div class="confirmacao-overlay" id="confirmacao-overlay-carrinho">
             <div class="confirmacao-container">
-                <img src="assets/seloCavanha_Recomendado.png" alt="Pedido Confirmado"
-                    class="fade-in">
+                <img src="assets/seloCavanha_Recomendado.png" alt="Pedido Confirmado" class="fade-in">
                 <h2 class="fade-in">Pedido Confirmado!</h2>
-                <p id="confirmacao-texto" class="fade-in"></p>
-                <button id="confirmacao-btn" class="fade-in">Voltar ao Início</button>
+                <p id="confirmacao-texto-carrinho" class="fade-in"></p>
+                <button id="confirmacao-btn-carrinho" class="fade-in">Voltar ao Início</button>
             </div>
         </div>
     </section>
@@ -184,11 +193,19 @@
     <!-- Footer -->
     <footer>
         <div class="container footer-container">
-            <div class="logo">
-                <img src="assets/logo-2.png" alt="Logo">
-                <h1 style="color: var(--primary-color);">Pizza do Cavanha</h1>
+            <div class="copyright-logo-container">
+                <div class="logo">
+                    <img src="assets/logo-2.png" alt="Logo">
+                    <h1 style="color: var(--primary-color);">Pizza do Cavanha</h1>
+                </div>
+                <p>© 2025 Pizza do Cavanha. Todos os direitos reservados.</p>
             </div>
-            <p>© 2025 Pizza do Cavanha. Todos os direitos reservados.</p>
+            <hr>
+            <div class="social-links-container">
+                <a href="https://github.com/DanielAraujo07" target="_blank" class="social-links"><img class="social-links-icon" src="assets/github.png" alt="GitHub"><p>DanielAraujo07</p></a>
+                <a href="https://wa.me/3199782383" target="_blank" class="social-links"><img class="social-links-icon" src="assets/Whatsapp.png" alt="WhatsApp"><p>(31) 9 9978-2383</p></a>
+                <a href="malito:daniel271207.produtividade@gmail.com" target="_blank" class="social-links"><img class="social-links-icon" src="assets/Gmail.png" alt="Gmail"><p>daniel271207.produtividade@gmail.com</p></a>
+            </div>
         </div>
     </footer>
     <script>
@@ -230,25 +247,24 @@
             const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
 
             // Mostrar animação de confirmação
-            const overlay = document.getElementById('confirmacao-overlay');
-            const textoConfirmacao = document.getElementById('confirmacao-texto');
+            const overlayCarrinho = document.getElementById('confirmacao-overlay-carrinho');
+            const textoConfirmacaoCarrinho = document.getElementById('confirmacao-texto-carrinho');
 
             // Texto personalizado com os detalhes do pedido
-            textoConfirmacao.textContent = `Seu pedido no valor de R$${total.toFixed(2)} foi recebido com sucesso! Em breve estará pronto para entrega.`;
+            textoConfirmacaoCarrinho.textContent = `Seu pedido, no valor de R$ ${total.toFixed(2)}, foi recebido com sucesso! O pagamento será realizado no momento da entrega (via Pix, cartão ou dinheiro) e, em breve, estará na sua casa!`;
 
             // Mostrar o overlay
-            overlay.classList.add('ativo');
+            overlayCarrinho.classList.add('ativo');
 
             // Configurar o botão de confirmação
-            document.getElementById('confirmacao-btn').addEventListener('click', function () {
+            document.getElementById('confirmacao-btn-carrinho').addEventListener('click', function () {
                 // Limpar carrinho após finalizar
                 carrinho = [];
                 atualizarCarrinho();
+                atualizarContadorCarrinho();        // ALTERAÇÃO 1
                 localStorage.removeItem('carrinho');
-
                 // Esconder o overlay
-                overlay.classList.remove('ativo');
-
+                overlayCarrinho.classList.remove('ativo');
                 // Voltar para a página inicial
                 showPage('home');
             });
@@ -634,6 +650,38 @@
                 totalPedido.textContent = total.toFixed(2);
             }
 
+            function limparPizza() {
+                // Reseta os arrays
+                ingredientesSelecionados = [];
+                ingredientesDesenhados = [];
+
+                // Atualiza a lista visual
+                atualizarListaIngredientes();
+
+                // Limpa e redesenha o canvas
+                const canvas = document.getElementById('pizza-canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Redesenha a base (substitua pela sua lógica de desenho da base)
+                const pizzaBaseImg = new Image();
+                pizzaBaseImg.src = './assets/pizzaBase.png';
+                pizzaBaseImg.onload = function () {
+                    const baseLargura = pizzaBaseImg.width * 0.8;
+                    const baseAltura = pizzaBaseImg.height * 0.8;
+                    const xBase = (canvas.width - baseLargura) / 2;
+                    const yBase = (canvas.height - baseAltura) / 2;
+                    ctx.drawImage(pizzaBaseImg, xBase, yBase, baseLargura, baseAltura);
+                };
+
+                // Reseta o tamanho para o padrão
+                document.querySelector('input[name="tamanho"][value="media"]').checked = true;
+                tamanhoAtual = 'media';
+
+                // Atualiza o total
+                calcularTotal();
+            }
+
             document.querySelectorAll('input[name="tamanho"]').forEach(radio => {
                 radio.addEventListener('change', function () {
                     canvas.width = size;
@@ -643,8 +691,27 @@
                 });
             });
 
-            btnFinalizar.addEventListener('click', function () {
-                alert(`Pedido finalizado! Total: R$${totalPedido.textContent}\nObrigado por escolher a Pizza do Cavanha!`);
+            btnFinalizar.addEventListener('click', function () { // ALTERAÇÃO 2
+                if (ingredientesSelecionados.length === 0) {
+                    alert('Por favor, adicione pelo menos um ingrediente!');
+                    return;
+                }
+
+                // Mostrar animação de confirmação
+                const overlay = document.getElementById('confirmacao-overlay');
+                const textoConfirmacao = document.getElementById('confirmacao-texto');
+
+                // Texto personalizado com os detalhes do pedido
+                textoConfirmacao.textContent = `Seu pedido, no valor de R$ ${totalPedido.textContent}, foi recebido com sucesso! O pagamento será realizado no momento da entrega (via Pix, cartão ou dinheiro) e, em breve, estará na sua casa!`;
+
+                // Mostrar o overlay
+                overlay.classList.add('ativo');
+                document.getElementById('confirmacao-btn').addEventListener('click', function () {
+                    // Esconde o overlay
+                    overlay.classList.remove('ativo');
+                    // Volta para a página inicial
+                    showPage('home');
+                });
             });
 
             window.removerIngrediente = removerIngrediente;
